@@ -10,13 +10,13 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/milkbobo/gopay/common"
-	"github.com/milkbobo/gopay/util"
 	"github.com/shopspring/decimal"
+	"github.com/wangwei-go/gopay/paydomain"
+	"github.com/wangwei-go/gopay/util"
 )
 
 // 微信企业付款到零钱
-func WachatCompanyChange(mchAppid, mchid, key string, conn *HTTPSClient, charge *common.Charge) (map[string]string, error) {
+func WachatCompanyChange(mchAppid, mchid, key string, conn *HTTPSClient, charge *paydomain.Charge) (map[string]string, error) {
 	var m = make(map[string]string)
 	m["mch_appid"] = mchAppid
 	m["mchid"] = mchid
@@ -104,8 +104,8 @@ func FilterTheSpecialSymbol(data string) string {
 }
 
 //对微信下订单或者查订单
-func PostWechat(url string, data map[string]string, h *HTTPSClient) (common.WeChatQueryResult, error) {
-	var xmlRe common.WeChatQueryResult
+func PostWechat(url string, data map[string]string, h *HTTPSClient) (paydomain.WeChatQueryResult, error) {
+	var xmlRe paydomain.WeChatQueryResult
 	buf := bytes.NewBufferString("")
 
 	for k, v := range data {
@@ -143,8 +143,8 @@ func PostWechat(url string, data map[string]string, h *HTTPSClient) (common.WeCh
 }
 
 //对支付宝者查订单
-func GetAlipay(url string) (common.AliWebQueryResult, error) {
-	var xmlRe common.AliWebQueryResult
+func GetAlipay(url string) (paydomain.AliWebQueryResult, error) {
+	var xmlRe paydomain.AliWebQueryResult
 
 	re, err := HTTPSC.GetData(url)
 	if err != nil {
@@ -158,8 +158,8 @@ func GetAlipay(url string) (common.AliWebQueryResult, error) {
 }
 
 //对支付宝者查订单
-func GetAlipayApp(urls string) (common.AliWebAppQueryResult, error) {
-	var aliPay common.AliWebAppQueryResult
+func GetAlipayApp(urls string) (paydomain.AliWebAppQueryResult, error) {
+	var aliPay paydomain.AliWebAppQueryResult
 
 	re, err := HTTPSC.GetData(urls)
 	if err != nil {

@@ -8,10 +8,11 @@ import (
 	"encoding/base64"
 	"errors"
 	"fmt"
-	"github.com/milkbobo/gopay/common"
 	"net/url"
 	"sort"
 	"strings"
+
+	"github.com/wangwei-go/gopay/paydomain"
 )
 
 var aliWebClient *AliWebClient
@@ -36,7 +37,7 @@ func DefaultAliWebClient() *AliWebClient {
 }
 
 // Pay 实现支付接口
-func (this *AliWebClient) Pay(charge *common.Charge) (map[string]string, error) {
+func (this *AliWebClient) Pay(charge *paydomain.Charge) (map[string]string, error) {
 	var m = make(map[string]string)
 	m["service"] = "create_direct_pay_by_user"
 	m["partner"] = this.PartnerID
@@ -55,12 +56,12 @@ func (this *AliWebClient) Pay(charge *common.Charge) (map[string]string, error) 
 	return map[string]string{"url": ToURL("https://mapi.alipay.com/gateway.do", m)}, nil
 }
 
-func (this *AliWebClient) PayToClient(charge *common.Charge) (map[string]string, error) {
+func (this *AliWebClient) PayToClient(charge *paydomain.Charge) (map[string]string, error) {
 	return map[string]string{}, errors.New("暂未开发该功能")
 }
 
 // 订单查询
-func (this *AliWebClient) QueryOrder(outTradeNo string) (common.AliWebQueryResult, error) {
+func (this *AliWebClient) QueryOrder(outTradeNo string) (paydomain.AliWebQueryResult, error) {
 	var m = make(map[string]string)
 	m["service"] = "single_trade_query"
 	m["partner"] = this.PartnerID

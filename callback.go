@@ -9,13 +9,14 @@ import (
 	"sort"
 	"strings"
 
-	"github.com/milkbobo/gopay/client"
-	"github.com/milkbobo/gopay/common"
-	"github.com/milkbobo/gopay/util"
 	"encoding/json"
+
+	"github.com/wangwei-go/gopay/client"
+	"github.com/wangwei-go/gopay/paydomain"
+	"github.com/wangwei-go/gopay/util"
 )
 
-func AliWebCallback(w http.ResponseWriter, r *http.Request) (*common.AliWebPayResult, error) {
+func AliWebCallback(w http.ResponseWriter, r *http.Request) (*paydomain.AliWebPayResult, error) {
 	var m = make(map[string]string)
 	var signSlice []string
 	r.ParseForm()
@@ -37,7 +38,7 @@ func AliWebCallback(w http.ResponseWriter, r *http.Request) (*common.AliWebPayRe
 
 	client.DefaultAliWebClient().CheckSign(signData, m["sign"])
 
-	var aliPay common.AliWebPayResult
+	var aliPay paydomain.AliWebPayResult
 	err := util.MapStringToStruct(m, &aliPay)
 	if err != nil {
 		w.Write([]byte("error"))
@@ -49,7 +50,7 @@ func AliWebCallback(w http.ResponseWriter, r *http.Request) (*common.AliWebPayRe
 }
 
 // 支付宝app支付回调
-func AliAppCallback(w http.ResponseWriter, r *http.Request) (*common.AliWebPayResult, error) {
+func AliAppCallback(w http.ResponseWriter, r *http.Request) (*paydomain.AliWebPayResult, error) {
 	var result string
 	defer func() {
 		w.Write([]byte(result))
@@ -80,7 +81,7 @@ func AliAppCallback(w http.ResponseWriter, r *http.Request) (*common.AliWebPayRe
 		panic(err)
 	}
 
-	var aliPay common.AliWebPayResult
+	var aliPay paydomain.AliWebPayResult
 	err = json.Unmarshal(mByte, &aliPay)
 	if err != nil {
 		result = "error"
@@ -91,7 +92,7 @@ func AliAppCallback(w http.ResponseWriter, r *http.Request) (*common.AliWebPayRe
 }
 
 // WeChatCallback 微信支付
-func WeChatWebCallback(w http.ResponseWriter, r *http.Request) (*common.WeChatPayResult, error) {
+func WeChatWebCallback(w http.ResponseWriter, r *http.Request) (*paydomain.WeChatPayResult, error) {
 	var returnCode = "FAIL"
 	var returnMsg = ""
 	defer func() {
@@ -100,7 +101,7 @@ func WeChatWebCallback(w http.ResponseWriter, r *http.Request) (*common.WeChatPa
 		returnBody := fmt.Sprintf(formatStr, returnCode, returnMsg)
 		w.Write([]byte(returnBody))
 	}()
-	var reXML common.WeChatPayResult
+	var reXML paydomain.WeChatPayResult
 	//body := cb.Ctx.Input.RequestBody
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -147,7 +148,7 @@ func WeChatWebCallback(w http.ResponseWriter, r *http.Request) (*common.WeChatPa
 	return &reXML, nil
 }
 
-func WeChatAppCallback(w http.ResponseWriter, r *http.Request) (*common.WeChatPayResult, error) {
+func WeChatAppCallback(w http.ResponseWriter, r *http.Request) (*paydomain.WeChatPayResult, error) {
 	var returnCode = "FAIL"
 	var returnMsg = ""
 	defer func() {
@@ -156,7 +157,7 @@ func WeChatAppCallback(w http.ResponseWriter, r *http.Request) (*common.WeChatPa
 		returnBody := fmt.Sprintf(formatStr, returnCode, returnMsg)
 		w.Write([]byte(returnBody))
 	}()
-	var reXML common.WeChatPayResult
+	var reXML paydomain.WeChatPayResult
 	//body := cb.Ctx.Input.RequestBody
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {

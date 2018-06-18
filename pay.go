@@ -2,13 +2,14 @@ package gopay
 
 import (
 	"errors"
-	"github.com/milkbobo/gopay/client"
-	"github.com/milkbobo/gopay/common"
-	"github.com/milkbobo/gopay/constant"
+
+	"github.com/wangwei-go/gopay/client"
+	"github.com/wangwei-go/gopay/constant"
+	"github.com/wangwei-go/gopay/paydomain"
 )
 
 // 用户下单支付接口
-func Pay(charge *common.Charge) (map[string]string, error) {
+func Pay(charge *paydomain.Charge) (map[string]string, error) {
 	err := checkCharge(charge)
 	if err != nil {
 		return map[string]string{}, err
@@ -20,7 +21,7 @@ func Pay(charge *common.Charge) (map[string]string, error) {
 }
 
 // 付款给用户接口
-func PayToClient(charge *common.Charge) (map[string]string, error) {
+func PayToClient(charge *paydomain.Charge) (map[string]string, error) {
 	err := checkCharge(charge)
 	if err != nil {
 		return nil, err
@@ -31,7 +32,7 @@ func PayToClient(charge *common.Charge) (map[string]string, error) {
 }
 
 // 验证支付内容
-func checkCharge(charge *common.Charge) error {
+func checkCharge(charge *paydomain.Charge) error {
 	if charge.PayMethod <= 0 {
 		return errors.New("PayMethod不能少于等于0")
 	}
@@ -42,7 +43,7 @@ func checkCharge(charge *common.Charge) error {
 }
 
 // getPayType 得到需要支付的类型
-func getPayType(payMethod int64) common.PayClient {
+func getPayType(payMethod int64) paydomain.PayClient {
 	//如果使用余额支付
 	switch payMethod {
 	case constant.ALI_WEB:

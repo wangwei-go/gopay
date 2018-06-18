@@ -5,17 +5,18 @@ import (
 	"crypto/x509"
 	"encoding/pem"
 	"fmt"
-	"github.com/milkbobo/gopay/client"
-	"github.com/milkbobo/gopay/common"
-	"github.com/milkbobo/gopay/constant"
 	"net/http"
 	"testing"
+
+	"github.com/wangwei-go/gopay/client"
+	"github.com/wangwei-go/gopay/constant"
+	"github.com/wangwei-go/gopay/paydomain"
 )
 
 func TestPay(t *testing.T) {
 	initClient()
 	initHandle()
-	charge := new(common.Charge)
+	charge := new(paydomain.Charge)
 	charge.PayMethod = constant.ALI_WEB
 	charge.MoneyFee = 1
 	charge.Describe = "test pay"

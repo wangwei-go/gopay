@@ -3,9 +3,10 @@ package client
 import (
 	"errors"
 	"fmt"
-	"github.com/milkbobo/gopay/common"
-	"github.com/milkbobo/gopay/util"
 	"time"
+
+	"github.com/wangwei-go/gopay/paydomain"
+	"github.com/wangwei-go/gopay/util"
 )
 
 var defaultWechatWebClient *WechatWebClient
@@ -29,7 +30,7 @@ type WechatWebClient struct {
 }
 
 // Pay 支付
-func (this *WechatWebClient) Pay(charge *common.Charge) (map[string]string, error) {
+func (this *WechatWebClient) Pay(charge *paydomain.Charge) (map[string]string, error) {
 	var m = make(map[string]string)
 	m["appid"] = this.AppID
 	m["mch_id"] = this.MchID
@@ -71,12 +72,12 @@ func (this *WechatWebClient) Pay(charge *common.Charge) (map[string]string, erro
 }
 
 // 支付到用户的微信账号
-func (this *WechatWebClient) PayToClient(charge *common.Charge) (map[string]string, error) {
+func (this *WechatWebClient) PayToClient(charge *paydomain.Charge) (map[string]string, error) {
 	return WachatCompanyChange(this.AppID, this.MchID, this.Key, this.httpsClient, charge)
 }
 
 // QueryOrder 查询订单
-func (this *WechatWebClient) QueryOrder(tradeNum string) (common.WeChatQueryResult, error) {
+func (this *WechatWebClient) QueryOrder(tradeNum string) (paydomain.WeChatQueryResult, error) {
 	var m = make(map[string]string)
 	m["appid"] = this.AppID
 	m["mch_id"] = this.MchID
@@ -85,7 +86,7 @@ func (this *WechatWebClient) QueryOrder(tradeNum string) (common.WeChatQueryResu
 
 	sign, err := WechatGenSign(this.Key, m)
 	if err != nil {
-		return common.WeChatQueryResult{}, err
+		return paydomain.WeChatQueryResult{}, err
 	}
 
 	m["sign"] = sign

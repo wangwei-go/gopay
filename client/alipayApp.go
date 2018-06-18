@@ -9,11 +9,12 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"github.com/milkbobo/gopay/common"
 	"net/url"
 	"sort"
 	"strings"
 	"time"
+
+	"github.com/wangwei-go/gopay/paydomain"
 )
 
 var defaultAliAppClient *AliAppClient
@@ -34,7 +35,7 @@ func DefaultAliAppClient() *AliAppClient {
 	return defaultAliAppClient
 }
 
-func (this *AliAppClient) Pay(charge *common.Charge) (map[string]string, error) {
+func (this *AliAppClient) Pay(charge *paydomain.Charge) (map[string]string, error) {
 	var m = make(map[string]string)
 	var bizContent = make(map[string]string)
 	m["app_id"] = this.AppID
@@ -61,12 +62,12 @@ func (this *AliAppClient) Pay(charge *common.Charge) (map[string]string, error) 
 	return map[string]string{"orderString": this.ToURL(m)}, nil
 }
 
-func (this *AliAppClient) PayToClient(charge *common.Charge) (map[string]string, error) {
+func (this *AliAppClient) PayToClient(charge *paydomain.Charge) (map[string]string, error) {
 	return map[string]string{}, errors.New("暂未开发该功能")
 }
 
 // 订单查询
-func (this *AliAppClient) QueryOrder(outTradeNo string) (common.AliWebAppQueryResult, error) {
+func (this *AliAppClient) QueryOrder(outTradeNo string) (paydomain.AliWebAppQueryResult, error) {
 	var m = make(map[string]string)
 	m["method"] = "alipay.trade.query"
 	m["app_id"] = this.AppID
@@ -78,7 +79,7 @@ func (this *AliAppClient) QueryOrder(outTradeNo string) (common.AliWebAppQueryRe
 	bizContent := map[string]string{"out_trade_no": outTradeNo}
 	bizContentJson, err := json.Marshal(bizContent)
 	if err != nil {
-		return common.AliWebAppQueryResult{}, errors.New("json.Marshal: " + err.Error())
+		return paydomain.AliWebAppQueryResult{}, errors.New("json.Marshal: " + err.Error())
 	}
 	m["biz_content"] = string(bizContentJson)
 	sign := this.GenSign(m)

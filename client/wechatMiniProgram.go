@@ -5,20 +5,20 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/milkbobo/gopay/common"
-	"github.com/milkbobo/gopay/util"
+	"github.com/wangwei-go/gopay/paydomain"
+	"github.com/wangwei-go/gopay/util"
 )
 
-func NewWechatMiniPayClient(config *WechatMiniConfig) *WechatMiniPayClient {
+func NewWechatMiniPayClient(config *WechatMiniPayConfig) *WechatMiniPayClient {
 	return &WechatMiniPayClient{Config: config}
 }
 
 type WechatMiniPayClient struct {
-	Config *WechatMiniConfig
+	Config *WechatMiniPayConfig
 }
 
 // WechatMiniProgramClient 微信小程序
-type WechatMiniConfig struct {
+type WechatMiniPayConfig struct {
 	AppID       string       // 公众账号ID
 	MchID       string       // 商户号ID
 	Key         string       // 密钥
@@ -28,7 +28,7 @@ type WechatMiniConfig struct {
 }
 
 // Pay 支付
-func (this *WechatMiniPayClient) Pay(charge *common.Charge) (map[string]string, error) {
+func (this *WechatMiniPayClient) Pay(charge *paydomain.Charge) (map[string]string, error) {
 	var m = make(map[string]string)
 	m["appid"] = this.Config.AppID
 	m["mch_id"] = this.Config.MchID
@@ -70,12 +70,12 @@ func (this *WechatMiniPayClient) Pay(charge *common.Charge) (map[string]string, 
 }
 
 // 支付到用户的微信账号
-func (this *WechatMiniPayClient) PayToClient(charge *common.Charge) (map[string]string, error) {
+func (this *WechatMiniPayClient) PayToClient(charge *paydomain.Charge) (map[string]string, error) {
 	return WachatCompanyChange(this.Config.AppID, this.Config.MchID, this.Config.Key, this.Config.httpsClient, charge)
 }
 
 // QueryOrder 查询订单
-func (this *WechatMiniPayClient) QueryOrder(tradeNum string) (common.WeChatQueryResult, error) {
+func (this *WechatMiniPayClient) QueryOrder(tradeNum string) (paydomain.WeChatQueryResult, error) {
 	var m = make(map[string]string)
 	m["appid"] = this.Config.AppID
 	m["mch_id"] = this.Config.MchID
@@ -84,7 +84,7 @@ func (this *WechatMiniPayClient) QueryOrder(tradeNum string) (common.WeChatQuery
 
 	sign, err := WechatGenSign(this.Config.Key, m)
 	if err != nil {
-		return common.WeChatQueryResult{}, err
+		return paydomain.WeChatQueryResult{}, err
 	}
 
 	m["sign"] = sign
