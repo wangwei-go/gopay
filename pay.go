@@ -55,7 +55,7 @@ func getPayType(payMethod int64) paydomain.PayClient {
 	case constant.WECHAT_APP:
 		return client.DefaultWechatAppClient()
 	case constant.WECHAT_MINI_PROGRAM:
-		return client.DefaultWechatMiniProgramClient()
+		return nil
 	}
 	return nil
 }
