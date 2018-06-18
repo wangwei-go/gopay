@@ -7,10 +7,11 @@ import (
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/milkbobo/gopay/common"
-	"github.com/milkbobo/gopay/util"
 	"sort"
 	"strings"
+
+	"github.com/milkbobo/gopay/common"
+	"github.com/milkbobo/gopay/util"
 	"github.com/shopspring/decimal"
 )
 
@@ -84,7 +85,7 @@ func TruncatedText(data string, length int) string {
 //过滤特殊符号
 func FilterTheSpecialSymbol(data string) string {
 	// 定义转换规则
-	specialSymbol := func(r rune) rune {
+	/*specialSymbol := func(r rune) rune {
 		if r == '`' || r == '[' || r == '~' || r == '!' || r == '@' || r == '#' || r == '$' ||
 			r == '^' || r == '&' || r == '*' || r == '~' || r == '(' || r == ')' || r == '=' ||
 			r == '~' || r == '|' || r == '{' || r == '}' || r == '~' || r == ':' || r == ';' ||
@@ -97,8 +98,8 @@ func FilterTheSpecialSymbol(data string) string {
 			return ' '
 		}
 		return r
-	}
-	data = strings.Map(specialSymbol, data)
+	}*/
+	//data = strings.Map(specialSymbol, data)
 	return strings.Replace(data, "\n", " ", -1)
 }
 
