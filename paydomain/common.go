@@ -14,7 +14,7 @@ type Charge struct {
 	Origin      string `json:"origin,omitempty"`
 	UserID      string `json:"userId,omitempty"`
 	PayMethod   int64  `json:"payMethod,omitempty"`
-	MoneyFee    int64  `json:"MoneyFee,omitempty"`
+	MoneyFee    int    `json:"MoneyFee,omitempty"`
 	CallbackURL string `json:"callbackURL,omitempty"`
 	ReturnURL   string `json:"returnURL,omitempty"`
 	ShowURL     string `json:"showURL,omitempty"`

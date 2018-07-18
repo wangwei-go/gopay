@@ -67,7 +67,7 @@ xxxxxxxx
 		AppID:      "xxxxxxxxxxxx",
 		PrivateKey: privateKey.(*rsa.PrivateKey),
 		PublicKey:  publicKey.(*rsa.PublicKey),
-		PayURL:     "https://mapi.alipay.com/gateway.do",
+		//PayURL:     "https://mapi.alipay.com/gateway.do",
 	})
 }
 

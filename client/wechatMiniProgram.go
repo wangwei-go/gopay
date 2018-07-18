@@ -36,7 +36,7 @@ func (this *WechatMiniPayClient) Pay(charge *paydomain.Charge) (map[string]strin
 	m["nonce_str"] = util.RandomStr()
 	m["body"] = TruncatedText(charge.Describe, 32)
 	m["out_trade_no"] = charge.TradeNum
-	m["total_fee"] = strconv.FormatInt(charge.MoneyFee, 10)
+	m["total_fee"] = strconv.Itoa(charge.MoneyFee)
 	m["spbill_create_ip"] = util.LocalIP()
 	m["notify_url"] = charge.CallbackURL
 	m["trade_type"] = "JSAPI"
