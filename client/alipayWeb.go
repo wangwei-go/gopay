@@ -46,7 +46,7 @@ func (this *AliWebClient) Pay(charge *paydomain.Charge) (map[string]string, erro
 	m["return_url"] = charge.ReturnURL // 注意链接不能有&符号，否则会签名错误
 	m["out_trade_no"] = charge.TradeNum
 	m["subject"] = TruncatedText(charge.Describe, 32)
-	m["total_fee"] = AliyunMoneyFeeToString(charge.MoneyFee)
+	m["total_fee"] = AliyunMoneyFeeToString(float64(charge.MoneyFee) / 100)
 	m["seller_id"] = this.SellerID
 
 	sign := this.GenSign(m)

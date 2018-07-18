@@ -23,7 +23,7 @@ func WachatCompanyChange(mchAppid, mchid, key string, conn *HTTPSClient, charge 
 	m["nonce_str"] = util.RandomStr()
 	m["partner_trade_no"] = charge.TradeNum
 	m["openid"] = charge.OpenID
-	m["amount"] = WechatMoneyFeeToString(charge.MoneyFee)
+	m["amount"] = WechatMoneyFeeToString(float64(charge.MoneyFee) / 100)
 	m["spbill_create_ip"] = util.LocalIP()
 	m["desc"] = TruncatedText(charge.Describe, 32)
 

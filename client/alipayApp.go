@@ -49,7 +49,7 @@ func (this *AliAppClient) Pay(charge *paydomain.Charge) (map[string]string, erro
 	bizContent["subject"] = TruncatedText(charge.Describe, 32)
 	bizContent["out_trade_no"] = charge.TradeNum
 	bizContent["product_code"] = "QUICK_MSECURITY_PAY"
-	bizContent["total_amount"] = AliyunMoneyFeeToString(charge.MoneyFee)
+	bizContent["total_amount"] = AliyunMoneyFeeToString(float64(charge.MoneyFee) / 100)
 
 	bizContentJson, err := json.Marshal(bizContent)
 	if err != nil {
