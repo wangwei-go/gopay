@@ -160,6 +160,7 @@ func WeChatAppCallback(w http.ResponseWriter, r *http.Request) (*paydomain.WeCha
 	var reXML paydomain.WeChatPayResult
 	//body := cb.Ctx.Input.RequestBody
 	body, err := ioutil.ReadAll(r.Body)
+	fmt.Println("body=>", string(body))
 	if err != nil {
 		//log.Error(string(body))
 		returnCode = "FAIL"
@@ -179,7 +180,7 @@ func WeChatAppCallback(w http.ResponseWriter, r *http.Request) (*paydomain.WeCha
 		returnCode = "FAIL"
 		return &reXML, errors.New(reXML.ReturnCode)
 	}
-	m := util.XmlToMap(body)
+	/*m := util.XmlToMap(body)
 
 	var signData []string
 	for k, v := range m {
@@ -198,7 +199,7 @@ func WeChatAppCallback(w http.ResponseWriter, r *http.Request) (*paydomain.WeCha
 
 	if mySign != m["sign"] {
 		panic(errors.New("签名交易错误"))
-	}
+	}*/
 
 	returnCode = "SUCCESS"
 	return &reXML, nil

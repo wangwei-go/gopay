@@ -10,18 +10,18 @@ type PayClient interface {
 
 // Charge 支付参数
 type Charge struct {
-	TradeNum    string  `json:"tradeNum,omitempty"`
-	Origin      string  `json:"origin,omitempty"`
-	UserID      string  `json:"userId,omitempty"`
-	PayMethod   int64   `json:"payMethod,omitempty"`
-	MoneyFee    float64 `json:"MoneyFee,omitempty"`
-	CallbackURL string  `json:"callbackURL,omitempty"`
-	ReturnURL   string  `json:"returnURL,omitempty"`
-	ShowURL     string  `json:"showURL,omitempty"`
-	Describe    string  `json:"describe,omitempty"`
-	OpenID      string  `json:"openid,omitempty"`
-	CheckName   bool    `json:"check_name,omitempty"`
-	ReUserName  string  `json:"re_user_name,omitempty"`
+	TradeNum    string `json:"tradeNum,omitempty"`
+	Origin      string `json:"origin,omitempty"`
+	UserID      string `json:"userId,omitempty"`
+	PayMethod   int64  `json:"payMethod,omitempty"`
+	MoneyFee    int64  `json:"MoneyFee,omitempty"`
+	CallbackURL string `json:"callbackURL,omitempty"`
+	ReturnURL   string `json:"returnURL,omitempty"`
+	ShowURL     string `json:"showURL,omitempty"`
+	Describe    string `json:"describe,omitempty"`
+	OpenID      string `json:"openid,omitempty"`
+	CheckName   bool   `json:"check_name,omitempty"`
+	ReUserName  string `json:"re_user_name,omitempty"`
 }
 
 //PayCallback 支付返回
